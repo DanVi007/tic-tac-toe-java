@@ -121,7 +121,7 @@ public class Board {
      * -1 is p2 winning
      * 1 is p1 winning
      * -2 is draw
-     * optimise this later not optimesed
+     * optimise this later not optimised
      */
     public int gameResult() {
 
