@@ -1,6 +1,6 @@
 package game.ui;
 
-import game.core.Board;
+import game.core.board.Board;
 import game.core.PvPSystem;
 
 public class Application {

@@ -1,5 +1,7 @@
 package game.core;
 
+import game.core.board.Board;
+
 public class PvPSystem {
     private Board board;
 

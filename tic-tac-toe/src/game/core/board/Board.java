@@ -1,4 +1,4 @@
-package game.core;
+package game.core.board;
 
 /**
  * @author Dan Vi Trinh
@@ -39,6 +39,24 @@ public class Board {
         guideLine6 = "  7  |  8  |  9  ";
         guideLine7 = "     |     |     ";
 
+    }
+
+    /**
+     * constructor for ease at testing
+     * @param positions
+     */
+    public Board(char[] positions){
+        this.positions = positions;
+        boardSymbols = new char[]{'X', 'O'};
+        spaceDividingGuide = " ".repeat(5);
+
+        guideLine1 = "     |     |     ";
+        guideLine2 = "  1  |  2  |  3  ";
+        guideLine3 = "-----|-----|-----";
+        guideLine4 = "  4  |  5  |  6  ";
+        guideLine5 = "-----|-----|-----";
+        guideLine6 = "  7  |  8  |  9  ";
+        guideLine7 = "     |     |     ";
     }
 
 
@@ -96,6 +114,84 @@ public class Board {
             board.append("\n");
         }
         return board.toString();
+    }
+
+    /**
+     * returns who is winning if no one is 0 is returned
+     * -1 is p2 winning
+     * 1 is p1 winning
+     * -2 is draw
+     * optimise this later not optimesed
+     */
+    public int gameResult() {
+
+        int winningNumber = 0;
+        //checking the rows if there is any one winning on rows
+        for (int index = 0; index < 9; index += 3) {
+            if (positions[index] == boardSymbols[0]
+                    && positions[index + 1] == boardSymbols[0]
+                    && positions[index + 2] == boardSymbols[0]
+            ) {
+                winningNumber = 1;
+            } else if (positions[index] == boardSymbols[1]
+                    && positions[index + 1] == boardSymbols[1]
+                    && positions[index + 2] == boardSymbols[1]) {
+                winningNumber = -1;
+            }
+        }
+
+        boolean foundPosition = false;
+        int index = 0;
+        while (index < 4 && !foundPosition) {
+            if (positions[index] == boardSymbols[0]
+                    && positions[index + 3] == boardSymbols[0]
+                    && positions[index + 6] == boardSymbols[0]) {
+                winningNumber = 1;
+                foundPosition = true;
+            } else if (positions[index] == boardSymbols[1]
+                    && positions[index + 3] == boardSymbols[1]
+                    && positions[index + 6] == boardSymbols[1]) {
+                winningNumber = -1;
+                foundPosition = true;
+            }
+            index ++;
+        }
+
+        if(positions[2] == boardSymbols[0]
+                && positions[4] == boardSymbols[0]
+        && positions[6] == boardSymbols[0]
+        ||(positions[0] == boardSymbols[0]
+        && positions[4] == boardSymbols[0]
+        && positions[8] == boardSymbols[0])){
+            winningNumber = 1;
+        }
+
+        if(positions[2] == boardSymbols[1]
+                && positions[4] == boardSymbols[1]
+                && positions[6] == boardSymbols[1]
+                ||(positions[0] == boardSymbols[1]
+                && positions[4] == boardSymbols[1]
+                && positions[8] == boardSymbols[1])){
+            winningNumber = -1;
+        }
+
+        if(draw() && winningNumber == 0){
+            return -2;
+        }
+
+        return winningNumber;
+    }
+
+    private boolean draw(){
+        boolean draw = true;
+        int index = 0;
+        while(draw && index < 9 ){
+            if(positions[index] == ' '){
+                draw = false;
+            }
+            index++;
+        }
+        return draw;
     }
 
     @Override
