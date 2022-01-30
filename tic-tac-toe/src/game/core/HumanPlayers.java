@@ -6,10 +6,10 @@ import game.core.board.Board;
 /**
  * for player vs player
  */
-public class PvPSystem {
+public class HumanPlayers {
 
 
-    public PvPSystem(){
+    public HumanPlayers(){
 
     }
 

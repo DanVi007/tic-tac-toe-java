@@ -14,4 +14,8 @@ public class ErrorMessage {
                 " and " + maxNumber);
     }
 
+    public void genericErrorMessage(){
+        System.err.println("Something went wrong ");
+    }
+
 }

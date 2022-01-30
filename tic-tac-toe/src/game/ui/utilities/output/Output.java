@@ -21,5 +21,8 @@ public class Output {
         System.out.println("Congratulations p" + playerWinner + " has won");
     }
 
+    public void askForPlayerNumber(){
+        System.out.println("Do you want to be player 1 or 2?");
+    }
 
 }
