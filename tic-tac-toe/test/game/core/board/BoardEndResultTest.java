@@ -2,7 +2,7 @@ package game.core.board;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BoardTest {
+class BoardEndResultTest {
 
     //positive tests
     /**
@@ -46,6 +46,20 @@ class BoardTest {
     }
 
     /**
+     * p1 wins on colums
+     */
+    @org.junit.jupiter.api.Test
+    void p1wins1Colum(){
+        char[] positions =
+                {'X', ' ', ' ',
+                 'X', ' ', ' ',
+                 'X', ' ', ' '};
+        Board board = new Board(positions);
+
+        assertEquals(1, board.gameResult());
+    }
+
+    /**
      * no one wins
      */
     @org.junit.jupiter.api.Test
@@ -65,18 +79,12 @@ class BoardTest {
     void draw() {
         char[] positions =
                 {'X', 'O', 'X',
-                'X', 'O', 'O',
-                'O', 'X', 'X'};
+                        'X', 'O', 'O',
+                        'O', 'X', 'X'};
         Board board = new Board(positions);
 
         assertEquals(-2, board.gameResult());
     }
-
-
-
-
-
-
 
 
 }

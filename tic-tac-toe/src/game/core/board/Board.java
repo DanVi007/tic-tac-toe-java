@@ -127,62 +127,91 @@ public class Board {
 
         int winningNumber = 0;
         //checking the rows if there is any one winning on rows
-        for (int index = 0; index < 9; index += 3) {
-            if (positions[index] == boardSymbols[0]
-                    && positions[index + 1] == boardSymbols[0]
-                    && positions[index + 2] == boardSymbols[0]
-            ) {
-                winningNumber = 1;
-            } else if (positions[index] == boardSymbols[1]
-                    && positions[index + 1] == boardSymbols[1]
-                    && positions[index + 2] == boardSymbols[1]) {
-                winningNumber = -1;
-            }
-        }
-
-        boolean foundPosition = false;
         int index = 0;
-        while (index < 4 && !foundPosition) {
-            if (positions[index] == boardSymbols[0]
-                    && positions[index + 3] == boardSymbols[0]
-                    && positions[index + 6] == boardSymbols[0]) {
+        boolean foundPosition = false;
+        while(index < 7 && !foundPosition ){
+            if(winOnRows(1,index)){
                 winningNumber = 1;
                 foundPosition = true;
-            } else if (positions[index] == boardSymbols[1]
-                    && positions[index + 3] == boardSymbols[1]
-                    && positions[index + 6] == boardSymbols[1]) {
+            } else if(winOnRows(2,index)){
                 winningNumber = -1;
                 foundPosition = true;
             }
-            index ++;
+            index += 3;
+        }
+        index = 0;
+
+        //columns
+        while (index < 3 && !foundPosition) {
+            if (winOnColumns(1,index)) {
+                winningNumber = 1;
+                foundPosition = true;
+            } else if (winOnColumns(2,index)) {
+                winningNumber = -1;
+                foundPosition = true;
+            }
+            index++;
         }
 
-        if(positions[2] == boardSymbols[0]
-                && positions[4] == boardSymbols[0]
-        && positions[6] == boardSymbols[0]
-        ||(positions[0] == boardSymbols[0]
-        && positions[4] == boardSymbols[0]
-        && positions[8] == boardSymbols[0])){
-            winningNumber = 1;
-        }
+       if(winOnDiagonal(1) && !foundPosition){
+           winningNumber = 1;
+       }
+       if(winOnDiagonal(2) && !foundPosition){
+           winningNumber = -1;
+       }
 
-        if(positions[2] == boardSymbols[1]
-                && positions[4] == boardSymbols[1]
-                && positions[6] == boardSymbols[1]
-                ||(positions[0] == boardSymbols[1]
-                && positions[4] == boardSymbols[1]
-                && positions[8] == boardSymbols[1])){
-            winningNumber = -1;
-        }
-
-        if(draw() && winningNumber == 0){
+        if(noMoreMoves() && winningNumber == 0){
             return -2;
         }
 
         return winningNumber;
     }
 
-    private boolean draw(){
+    /**
+     * type in 1 for p1 and 2 for p2
+     * @param playerToCheck
+     * @return
+     */
+    private boolean winOnDiagonal(int playerToCheck){
+        int playerSymbol = playerToCheck - 1;
+        if(positions[2] == boardSymbols[playerSymbol]
+                && positions[4] == boardSymbols[playerSymbol]
+                && positions[6] == boardSymbols[playerSymbol]
+                ||(positions[0] == boardSymbols[playerSymbol]
+                && positions[4] == boardSymbols[playerSymbol]
+                && positions[8] == boardSymbols[playerSymbol])){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean winOnRows(int playerToCheck, int firstIndexInRow) {
+        int playerSymbol = playerToCheck - 1;
+        int index = firstIndexInRow;
+        if (positions[index] == boardSymbols[playerSymbol]
+                && positions[index + 1] == boardSymbols[playerSymbol]
+                && positions[index + 2] == boardSymbols[playerSymbol]
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+
+
+    private boolean winOnColumns(int playerToCheck, int firstIndexInCollum){
+        int playerSymbol = playerToCheck -1;
+        int index = firstIndexInCollum;
+        if (positions[index] == boardSymbols[playerSymbol]
+                && positions[index + 3] == boardSymbols[playerSymbol]
+                && positions[index + 6] == boardSymbols[playerSymbol]) {
+            return true;
+        }
+        return false;
+    }
+
+
+    private boolean noMoreMoves(){
         boolean draw = true;
         int index = 0;
         while(draw && index < 9 ){
@@ -200,11 +229,15 @@ public class Board {
     }
 
     public static void main(String[] args) {
-        Board board = new Board();
+        char[] positions = {' ', ' ', ' ',
+                'O', 'O', 'O',
+                ' ', ' ', ' '};
+        Board board = new Board(positions);
         System.out.println(board.positions);
         String brett = board.formBoard();
         System.out.println(brett);
 
+        System.out.println(board.gameResult());
 
 
     }
