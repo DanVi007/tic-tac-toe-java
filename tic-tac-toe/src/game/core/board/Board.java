@@ -118,59 +118,56 @@ public class Board {
 
     /**
      * returns who is winning if no one is 0 is returned
-     * -1 is p2 winning
+     * 2 is p2 winning
      * 1 is p1 winning
      * -2 is draw
      * optimise this later not optimised
      */
     public int gameResult() {
-
         int winningNumber = 0;
         //checking the rows if there is any one winning on rows
         int index = 0;
-        boolean foundPosition = false;
-        while(index < 7 && !foundPosition ){
+        boolean winnerFound = false;
+        while(index < 7 && !winnerFound ){
             if(winOnRows(1,index)){
                 winningNumber = 1;
-                foundPosition = true;
+                winnerFound = true;
             } else if(winOnRows(2,index)){
-                winningNumber = -1;
-                foundPosition = true;
+                winningNumber = 2;
+                winnerFound = true;
             }
             index += 3;
         }
         index = 0;
-
         //columns
-        while (index < 3 && !foundPosition) {
+        while (index < 3 && !winnerFound) {
             if (winOnColumns(1,index)) {
                 winningNumber = 1;
-                foundPosition = true;
+                winnerFound = true;
             } else if (winOnColumns(2,index)) {
-                winningNumber = -1;
-                foundPosition = true;
+                winningNumber = 2;
+                winnerFound = true;
             }
             index++;
         }
-
-       if(winOnDiagonal(1) && !foundPosition){
+        //diagonal
+       if(winOnDiagonal(1) && !winnerFound){
            winningNumber = 1;
        }
-       if(winOnDiagonal(2) && !foundPosition){
-           winningNumber = -1;
+       if(winOnDiagonal(2) && !winnerFound){
+           winningNumber = 2;
        }
-
-        if(noMoreMoves() && winningNumber == 0){
+        //draw
+        if(noMoreMoves() && !winnerFound){
             return -2;
         }
-
         return winningNumber;
     }
 
     /**
-     * type in 1 for p1 and 2 for p2
-     * @param playerToCheck
-     * @return
+     * checks if player is winning on diagonal
+     * @param playerToCheck type in 1 for p1 and 2 for p2
+     * @return boolean if the player has won or not
      */
     private boolean winOnDiagonal(int playerToCheck){
         int playerSymbol = playerToCheck - 1;
@@ -185,6 +182,12 @@ public class Board {
         return false;
     }
 
+    /**
+     * checks if player is winning on a row
+     * @param playerToCheck type in 1 for p1 and 2 for p2
+     * @param firstIndexInRow the first index of the row to be checked
+     * @return boolean if the player has won or not
+     */
     private boolean winOnRows(int playerToCheck, int firstIndexInRow) {
         int playerSymbol = playerToCheck - 1;
         int index = firstIndexInRow;
@@ -198,7 +201,12 @@ public class Board {
     }
 
 
-
+    /**
+     * checks if player is winning on a collum
+     * @param playerToCheck type in 1 for p1 and 2 for p2
+     * @param firstIndexInCollum the first index of the colum to be checked
+     * @return boolean if the player has won or not
+     */
     private boolean winOnColumns(int playerToCheck, int firstIndexInCollum){
         int playerSymbol = playerToCheck -1;
         int index = firstIndexInCollum;
@@ -210,17 +218,22 @@ public class Board {
         return false;
     }
 
-
+    /**
+     * checks if there is any more moves
+     * checks if all the positions are filled
+     * @return boolean value of whether all the
+     *          postions are filled or not.
+     */
     private boolean noMoreMoves(){
-        boolean draw = true;
+        boolean empty = false;
         int index = 0;
-        while(draw && index < 9 ){
+        while(!empty && index < 9 ){
             if(positions[index] == ' '){
-                draw = false;
+                empty = true;
             }
             index++;
         }
-        return draw;
+        return !empty;
     }
 
     @Override

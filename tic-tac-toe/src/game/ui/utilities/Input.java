@@ -1,13 +1,19 @@
 package game.ui.utilities;
 
+
+
+import game.ui.utilities.output.ErrorMessage;
+
 import java.util.Scanner;
 
 public class Input {
 
     private Scanner scanner;
+    private ErrorMessage message;
 
     public Input(){
         scanner = new Scanner(System.in);
+        message = new ErrorMessage();
     }
 
     /**c
@@ -23,10 +29,13 @@ public class Input {
             if(scanner.hasNextInt()){
                 number = scanner.nextInt();
             } else {
+                message.notANumber();
                 scanner.nextLine();
             }
             if(number >= minNumber && number <= maxNumber){
                 correctNumber = true;
+            } else {
+                message.invalidNumber(minNumber,maxNumber);
             }
             scanner.nextLine();
         }

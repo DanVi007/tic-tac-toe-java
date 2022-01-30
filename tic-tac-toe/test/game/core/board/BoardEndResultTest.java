@@ -42,7 +42,7 @@ class BoardEndResultTest {
                 ' ', ' ', ' '};
         Board board = new Board(positions);
 
-        assertEquals(-1, board.gameResult());
+        assertEquals(2, board.gameResult());
     }
 
     /**
