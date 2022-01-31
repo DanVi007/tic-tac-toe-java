@@ -4,6 +4,7 @@ import game.core.EasyBot;
 import game.core.board.Board;
 import game.core.HumanPlayers;
 import game.ui.utilities.Input;
+import game.ui.utilities.MenuChoices;
 import game.ui.utilities.output.ErrorMessage;
 import game.ui.utilities.output.Output;
 
@@ -17,6 +18,7 @@ public class Application {
     private EasyBot easyBot;
 
 
+
     public Application(){
         input = new Input();
         output = new Output();
@@ -24,9 +26,6 @@ public class Application {
         errorMessage = new ErrorMessage();
     }
 
-    public void menu(){
-
-    }
 
     /**
      *
@@ -129,18 +128,39 @@ public class Application {
         } while(!gameEnd);
     }
 
-
-
     private int choosePlayer(){
         output.askForPlayerNumber();
         int playerNumber = input.getNumber(1,2);
         return playerNumber;
     }
 
+    public void menu(){
+        boolean exit = false;
+        output.welcomeMessage();
+        do{
+            output.printMenuChoices();
+            int menuChoice = input.getNumber(1, MenuChoices.values().length);
+            switch (MenuChoices.values()[menuChoice-1]){
+                case EXIT:
+                    exit = true;
+                    output.goodbyeMessage();
+                    break;
+                case PVP:
+                    pvpGame();
+                    break;
+                case EASY_BOT:
+                    easyBot();
+                    break;
+                default:
+                    errorMessage.genericErrorMessage();
+            }
+
+        } while(!exit);
+    }
+
     public static void main(String[] args) {
         Application application = new Application();
-
-        application.easyBot();
+        application.menu();
     }
 
 
