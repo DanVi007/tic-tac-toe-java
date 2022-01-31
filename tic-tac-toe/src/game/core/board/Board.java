@@ -153,9 +153,11 @@ public class Board {
         //diagonal
        if(winOnDiagonal(1) && !winnerFound){
            winningNumber = 1;
+           winnerFound = true;
        }
        if(winOnDiagonal(2) && !winnerFound){
            winningNumber = 2;
+           winnerFound = true;
        }
         //draw
         if(noMoreMoves() && !winnerFound){

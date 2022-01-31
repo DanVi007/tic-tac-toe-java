@@ -1,5 +1,7 @@
 package game.core.board;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardEndResultTest {
@@ -84,6 +86,20 @@ class BoardEndResultTest {
         Board board = new Board(positions);
 
         assertEquals(-2, board.gameResult());
+    }
+
+    /**
+     * last win
+     */
+    @Test
+    void lastWin(){
+        char[] positions =
+                {'X', 'O', 'X',
+                        'O', 'X', 'O',
+                        'O', 'X', 'X'};
+        Board board = new Board(positions);
+
+        assertEquals(1,board.gameResult());
     }
 
 

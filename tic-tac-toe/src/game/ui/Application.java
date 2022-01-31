@@ -34,67 +34,97 @@ public class Application {
     private void pvpGame(){
         board = new Board();
         boolean gameEnd = false;
+        int gameResult;
 
         do {
             //p1 move
            output.printInfo(board.toString());
-           playerMove(1);
-           output.printInfo(board.toString());
-
-           int result = board.gameResult();
-
-           if(result == -2){
-               output.drawMessage();
+           gameResult = board.gameResult();
+           if(gameResult == 0){
+               playerMove(1);
+           } else {
                gameEnd = true;
-           }else if(result == 1 || result== 2){
-               output.winnerMessage(result);
-               gameEnd = true;
-            } else if(result == 0){
-               //p2 move
-                playerMove(2);
+               output.winnerMessage(2);
            }
+           //p2 move
+            output.printInfo(board.toString());
+            gameResult = board.gameResult();
+
+            if(gameResult == 0){
+                playerMove(2);
+            } else if(gameResult == -2) {
+                gameEnd = true;
+                output.drawMessage();
+            } else {
+                gameEnd = true;
+                output.winnerMessage(1);
+            }
+
+
         } while(!gameEnd);
     }
 
-    private void playerMove(int playerNumber){
-        output.askForMove();
-        int move = input.getNumber(1,9);
-        if(!humanPlayers.playerMove(board,move,playerNumber)){
-            errorMessage.genericErrorMessage();
+
+    /**
+     * asks for correct move untill its given
+     * @param playerNumber
+     * @return
+     */
+    private boolean playerMove(int playerNumber){
+        boolean correctMove = false;
+        int move;
+        while(!correctMove){
+            output.askForMove();
+            move = input.getNumber(1,9);
+            if(humanPlayers.playerMove(board,move,playerNumber)){
+                correctMove = true;
+            } else {
+                errorMessage.positionTakenMessage();
+            }
         }
+        return true;
     }
 
     /**
-     * fix 
+     * a bit brute force fix but works
+     * optimise later
      */
     private void easyBot(){
         easyBot = new EasyBot();
         board = new Board();
-        int playerNumber = choosePlayer();
-        // to get the reverse playernumber
-        int botNumber = 3 - playerNumber;
-        boolean humanStart = playerNumber < botNumber;
-
+        int humanPlayerNumber = choosePlayer();
+        // to get the reverse player number
+        int botNumber = 3 - humanPlayerNumber;
+        boolean humanStart = humanPlayerNumber < botNumber;
+        int gameResult;
         boolean gameEnd = false;
         do {
             //p1 move
-
-            output.printInfo(board.toString());
-            if(humanStart) {
-                playerMove(playerNumber);
+            if(humanStart){
+                output.printInfo(board.toString());
             }
-            int result = board.gameResult();
-
-            if(result == -2){
+            gameResult = board.gameResult();
+            if(humanStart && gameResult == 0) {
+                playerMove(humanPlayerNumber);
+            } else if (gameResult == -2){
                 output.drawMessage();
                 gameEnd = true;
-            }else if(result == 1 || result== 2){
-                output.winnerMessage(result);
+            } else if(gameResult == botNumber) {
+                output.winnerMessage(botNumber);
                 gameEnd = true;
-            } else if(result == 0){
-                //p2 move
+            }
+            //p2 move
+            gameResult = board.gameResult();
+            if(gameResult == 0){
                 easyBot.botMove(board,botNumber);
                 humanStart = true;
+            } else if(gameResult == -2){
+                gameEnd = true;
+                output.drawMessage();
+            } else if(gameResult == humanPlayerNumber){
+                gameEnd = true;
+                output.printInfo(board.toString());
+                output.winnerMessage(humanPlayerNumber);
             }
         } while(!gameEnd);
     }
@@ -109,6 +139,7 @@ public class Application {
 
     public static void main(String[] args) {
         Application application = new Application();
+
         application.easyBot();
     }
 

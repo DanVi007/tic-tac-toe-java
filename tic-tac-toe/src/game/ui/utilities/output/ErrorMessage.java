@@ -18,4 +18,8 @@ public class ErrorMessage {
         System.err.println("Something went wrong ");
     }
 
+
+    public void positionTakenMessage(){
+        System.err.println("The position is already taken ");
+    }
 }

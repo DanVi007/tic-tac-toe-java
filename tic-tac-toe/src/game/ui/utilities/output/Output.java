@@ -22,7 +22,8 @@ public class Output {
     }
 
     public void askForPlayerNumber(){
-        System.out.println("Do you want to be player 1 or 2?");
+        System.out.println("Do you want to be player 1 or 2? ");
+        System.out.println("player 1 = X , player 2 = O");
     }
 
 }

@@ -37,9 +37,11 @@ public class Input {
             } else {
                 message.invalidNumber(minNumber,maxNumber);
             }
-            scanner.nextLine();
         }
         return number;
     }
+
+
+
 
 }
