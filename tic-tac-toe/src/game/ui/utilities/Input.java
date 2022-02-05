@@ -30,13 +30,14 @@ public class Input {
                 number = scanner.nextInt();
             } else {
                 message.notANumber();
-                scanner.nextLine();
             }
+
             if(number >= minNumber && number <= maxNumber){
                 correctNumber = true;
             } else {
                 message.invalidNumber(minNumber,maxNumber);
             }
+            scanner.nextLine();
         }
         return number;
     }
