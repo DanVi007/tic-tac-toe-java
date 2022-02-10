@@ -1,5 +1,8 @@
 package game.core.board;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Dan Vi Trinh
  * board for the game
@@ -73,12 +76,32 @@ public class Board {
         }
     }
 
-
+    /**
+     * returns true if position is taken and false if it is not
+     * @param position
+     * @return
+     */
     public boolean positionTaken(int position){
         if(positions[position] != ' '){
             return false;
         }
         return true;
+    }
+
+
+    public ArrayList<Integer> getAvailablePositions(){
+        ArrayList<Integer> availablePositions = new ArrayList<>();
+
+        for(int position = 0;position < positions.length; position++){
+            if(!positionTaken(position)){
+                availablePositions.add(position);
+            }
+        }
+
+        return availablePositions;
+
+
+
     }
 
 

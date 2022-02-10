@@ -1,6 +1,6 @@
 package game.ui;
 
-import game.core.EasyBot;
+import game.core.ai.easy.EasyBot;
 import game.core.board.Board;
 import game.core.HumanPlayers;
 import game.ui.utilities.Input;

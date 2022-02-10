@@ -1,4 +1,4 @@
-package game.core;
+package game.core.ai.easy;
 
 import game.core.board.Board;
 
