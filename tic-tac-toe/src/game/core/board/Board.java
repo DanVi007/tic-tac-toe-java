@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Board {
     private char[] positions;
-
+    public static final int[] ALL_POSITIONS = {0,1,2,3,4,5,6,7,8};
     //not in use only for testing
     private char[] testPositions = {'1','2', '3',
             '4', '5', '6',
@@ -88,7 +88,12 @@ public class Board {
         return true;
     }
 
-
+    /**
+     * not really necessary,
+     * using only set positions is enough
+     * @return
+     */
+    /*
     public ArrayList<Integer> getAvailablePositions(){
         ArrayList<Integer> availablePositions = new ArrayList<>();
 
@@ -99,10 +104,9 @@ public class Board {
         }
 
         return availablePositions;
-
-
-
     }
+  */
+
 
 
 
