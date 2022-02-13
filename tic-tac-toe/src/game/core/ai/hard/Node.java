@@ -15,9 +15,15 @@ public class Node{
     private int depth;
     private Board gamePosition;
     private int playerNumber;
+    private int bestMove;
+
 
     public int getPositionPlayed() {
         return positionPlayed;
+    }
+
+    public int getBestMove(){
+        return bestMove;
     }
 
     public ArrayList<Node> getChildren() {
@@ -38,18 +44,18 @@ public class Node{
 
     public Node(Board gamePosition, int depth,
                 int playerNumber, int positionPlayed){
-        this.gamePosition = gamePosition;
+        this.gamePosition =  new Board(gamePosition);
         this.depth = depth;
         this.playerNumber = playerNumber;
         this.positionPlayed = positionPlayed;
-        if(depth > 0 ){
+        if(depth >= 0 ){
             createChildren();
         }
     }
 
     public Node(Board gamePosition, int depth,
                 int playerNumber){
-        this.gamePosition = gamePosition;
+        this.gamePosition = new Board(gamePosition);
         this.depth = depth;
         this.playerNumber = playerNumber;
 
@@ -88,33 +94,38 @@ public class Node{
      * p2 is -1 = - max
      */
     public int miniMax(){
-        if(depth == 0 && gameResult() == 0){
-            return 0;
-        }else if(depth == 0 || Math.abs(gameResult()) == Integer.MAX_VALUE){
-            return playerNumber == 1 ? Integer.MAX_VALUE : -Integer.MAX_VALUE;
-        }
+        //System.out.println(depth);
 
+        if(children.size() == 0){
+            return 0;
+        }else if(depth == 0 && gameResult() == 0){
+            return 0;
+        } else if(gameResult() == Integer.MAX_VALUE){
+            return gameResult();
+        } else if(gameResult() == -Integer.MAX_VALUE){
+            return  gameResult();
+        }
 
         if(playerNumber == 1){
             int maxEval = Integer.MAX_VALUE;
-
+            //int maxEval = 0;
             for(Node child : children){
                 int eval = child.miniMax();
                 if(eval < maxEval){
                     maxEval = eval;
-                    positionPlayed = child.getPositionPlayed();
+                    bestMove = child.getPositionPlayed();
                 }
             }
             return maxEval;
         } else {
-            int minEval = - Integer.MAX_VALUE;
-
+            int minEval = -Integer.MAX_VALUE;
+            //int minEval = 0;
             for(Node child : children){
                 int eval = child.miniMax();
 
                 if(eval > minEval){
                     minEval = eval;
-                    positionPlayed = child.getPositionPlayed();
+                    bestMove = child.getPositionPlayed();
                 }
             }
             return minEval;

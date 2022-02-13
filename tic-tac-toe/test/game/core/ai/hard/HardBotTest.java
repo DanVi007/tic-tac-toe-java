@@ -21,12 +21,24 @@ class HardBotTest {
 
         System.out.println(board.toString());
 
-
-
-
-
         //assertEquals(true,bot.botMove(board,1));
+
+    }
+
+
+    @Test
+    void blockMove(){
+        char[] positions =
+                       {'O', 'X', 'O',
+                        'O', 'X', 'O',
+                        'X', ' ', ' '};
+        Board board = new Board(positions);
+        HardBot bot = new HardBot();
+        bot.botMove(board,2);
+
+        System.out.println(board.toString());
 
 
     }
+
 }

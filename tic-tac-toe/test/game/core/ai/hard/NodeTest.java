@@ -29,6 +29,38 @@ class NodeTest {
 
     }
 
+
+    @Test
+    void checkChildren(){
+        char[] positions =
+                {'X', 'X', ' ',
+                        'O', ' ', ' ',
+                        ' ', ' ', ' '};
+        Board board = new Board(positions);
+        Node node = new Node(board,10,1);
+        ArrayList<Node> children = node.getChildren();
+
+        System.out.println(children.get(1).getChildren().get(1).getGamePosition().toString());
+
+
+
+    }
+
+    @Test
+    void checkChildren2(){
+        char[] positions =
+                {'X', 'X', ' ',
+                        'O', ' ', ' ',
+                        ' ', ' ', ' '};
+        Board board = new Board(positions);
+
+        Node node = new Node(board,10,1);
+
+
+
+    }
+
+
     /**
      * https://www.techiedelight.com/copy-objects-in-java/
      * https://www.baeldung.com/java-deep-copy
