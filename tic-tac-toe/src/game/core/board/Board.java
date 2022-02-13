@@ -8,7 +8,7 @@ import java.util.List;
  * board for the game
  * stores all the positions in the game
  */
-public class Board {
+public class Board  {
     private char[] positions;
     public static final int[] ALL_POSITIONS = {0,1,2,3,4,5,6,7,8};
     //not in use only for testing
@@ -62,15 +62,47 @@ public class Board {
         guideLine7 = "     |     |     ";
     }
 
+    /**
+     * copy constructor
+     */
+    public Board(Board board){
+        this.positions = new char[board.positions.length];
+        for (int i = 0; i < board.positions.length; i++) {
+            this.positions[i] = board.positions[i];
+        }
+
+        this.boardSymbols = new char[board.boardSymbols.length];
+        for(int i = 0; i< board.boardSymbols.length;i++){
+            this.boardSymbols[i] = board.boardSymbols[i];
+        }
+        spaceDividingGuide = " ".repeat(5);
+
+        guideLine1 = "     |     |     ";
+        guideLine2 = "  1  |  2  |  3  ";
+        guideLine3 = "-----|-----|-----";
+        guideLine4 = "  4  |  5  |  6  ";
+        guideLine5 = "-----|-----|-----";
+        guideLine6 = "  7  |  8  |  9  ";
+        guideLine7 = "     |     |     ";
+    }
 
     public char[] getPositions(){
         return positions;
     }
 
+    /**
+     *
+     * @param indexOfPosition
+     * @param playerNumber
+     * @return
+     */
     public boolean setPositions(int indexOfPosition, int playerNumber){
         try{
-            positions[indexOfPosition] = boardSymbols[playerNumber -1 ];
-            return true;
+            if(positionTaken(indexOfPosition)){
+                positions[indexOfPosition] = boardSymbols[playerNumber -1 ];
+                return true;
+            }
+            return false;
         } catch(IndexOutOfBoundsException e){
             return false;
         }
@@ -93,19 +125,19 @@ public class Board {
      * using only set positions is enough
      * @return
      */
-    /*
+
     public ArrayList<Integer> getAvailablePositions(){
         ArrayList<Integer> availablePositions = new ArrayList<>();
 
         for(int position = 0;position < positions.length; position++){
-            if(!positionTaken(position)){
+            if(positionTaken(position)){
                 availablePositions.add(position);
             }
         }
 
         return availablePositions;
     }
-  */
+
 
 
 
@@ -269,6 +301,9 @@ public class Board {
     public String toString() {
         return formBoard();
     }
+
+
+
 
     public static void main(String[] args) {
         char[] positions = {' ', ' ', ' ',

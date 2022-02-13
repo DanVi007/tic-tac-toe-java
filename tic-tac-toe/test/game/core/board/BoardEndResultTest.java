@@ -103,4 +103,38 @@ class BoardEndResultTest {
     }
 
 
+    /**
+     * generic test
+     */
+    @Test
+    void noOneWins2(){
+        char[] positions =
+                {'X', 'X', ' ',
+                        'O', 'O', ' ',
+                        ' ', ' ', ' '};
+        Board board = new Board(positions);
+
+        assertEquals(0,board.gameResult());
+
+
+    }
+
+
+    /**
+     * available moves
+     */
+    @Test
+    void availablePostions(){
+        char[] positions =
+                {'X', 'X', ' ',
+                        'O', 'O', ' ',
+                        ' ', ' ', ' '};
+
+        Board board = new Board(positions);
+
+        assertEquals(5, board.getAvailablePositions().size());
+
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package game.ui;
 
 import game.core.ai.easy.EasyBot;
+import game.core.ai.hard.HardBot;
 import game.core.board.Board;
 import game.core.HumanPlayers;
 import game.ui.utilities.Input;
@@ -16,6 +17,8 @@ public class Application {
     private Input input;
     private ErrorMessage errorMessage;
     private EasyBot easyBot;
+    private HardBot hardBot;
+
 
 
 
@@ -128,6 +131,52 @@ public class Application {
         } while(!gameEnd);
     }
 
+    /**
+     * a bit brute force fix but works
+     * optimise later
+     */
+    private void hardBot(){
+        hardBot = new HardBot();
+        board = new Board();
+        int humanPlayerNumber = choosePlayer();
+        // to get the reverse player number
+        int botNumber = 3 - humanPlayerNumber;
+        boolean humanStart = humanPlayerNumber < botNumber;
+        int gameResult;
+        boolean gameEnd = false;
+        do {
+            //p1 move
+            if(humanStart){
+                output.printInfo(board.toString());
+            }
+            gameResult = board.gameResult();
+            if(humanStart && gameResult == 0) {
+                playerMove(humanPlayerNumber);
+            } else if (gameResult == -2){
+                output.drawMessage();
+                gameEnd = true;
+            } else if(gameResult == botNumber) {
+                output.winnerMessage(botNumber);
+                gameEnd = true;
+            }
+            //p2 move
+            gameResult = board.gameResult();
+            if(gameResult == 0){
+                hardBot.botMove(board,botNumber);
+                humanStart = true;
+            } else if(gameResult == -2){
+                gameEnd = true;
+                output.drawMessage();
+            } else if(gameResult == humanPlayerNumber){
+                gameEnd = true;
+                output.printInfo(board.toString());
+                output.winnerMessage(humanPlayerNumber);
+            }
+        } while(!gameEnd);
+    }
+
+
+
     private int choosePlayer(){
         output.askForPlayerNumber();
         int playerNumber = input.getNumber(1,2);
@@ -150,6 +199,9 @@ public class Application {
                     break;
                 case EASY_BOT:
                     easyBot();
+                    break;
+                case HARD_BOT:
+                    hardBot();
                     break;
                 default:
                     errorMessage.genericErrorMessage();

@@ -5,7 +5,8 @@ package game.ui.utilities;
 public enum MenuChoices {
     EXIT,
     PVP ,
-    EASY_BOT;
+    EASY_BOT,
+    HARD_BOT;
 
 
 
