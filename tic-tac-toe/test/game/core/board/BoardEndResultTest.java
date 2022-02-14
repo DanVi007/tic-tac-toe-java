@@ -136,6 +136,14 @@ class BoardEndResultTest {
 
         assertEquals(5, board.getAvailablePositions().size());
 
+        assertEquals(2, board.getAvailablePositions().get(0));
+        assertEquals(5, board.getAvailablePositions().get(1));
+        assertEquals(6, board.getAvailablePositions().get(2));
+        assertEquals(7, board.getAvailablePositions().get(3));
+        assertEquals(8, board.getAvailablePositions().get(4));
+
+
+
     }
 
 

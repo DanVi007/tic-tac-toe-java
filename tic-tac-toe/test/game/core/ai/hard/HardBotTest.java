@@ -41,4 +41,20 @@ class HardBotTest {
 
     }
 
+    @Test
+    void notOptimalPlay(){
+        char[] positions =
+                        {'X', 'O', 'X',
+                        ' ', 'O', ' ',
+                        'O', 'X', 'X'};
+        Board board = new Board(positions);
+        HardBot bot = new HardBot();
+        bot.botMove(board,2);
+
+        System.out.println(board);
+
+
+
+    }
+
 }

@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * p1 is 1 = max
- * p2 is -1 = - max
+ * p1 is 1 = -max
+ * p2 is -1 = max
  */
 public class Node{
     private int positionPlayed;
@@ -74,6 +74,7 @@ public class Node{
             Board newGamePosition = new Board(gamePosition);
 
             //int playerNumberTranslation = (int)(1.5 + 0.5*playerNumber);
+            // 1 becomes 1 , -1 becomes 2
             int playerNumberTranslation = (int)(1.5 - 0.5*playerNumber);
 
             if(newGamePosition.setPositions(position, playerNumberTranslation)){
@@ -93,10 +94,9 @@ public class Node{
      * p1 is 1 = max
      * p2 is -1 = - max
      */
-    public int miniMax(){
+    public int miniMax() {
         //System.out.println(depth);
-
-        if(children.size() == 0){
+        if(children.isEmpty() && gameResult() == 0){
             return 0;
         }else if(depth == 0 && gameResult() == 0){
             return 0;
@@ -144,9 +144,9 @@ public class Node{
     public int gameResult() {
         int gameResult = gamePosition.gameResult();
         if (gameResult == 1) {
-            return Integer.MAX_VALUE;
-        } else if (gameResult == 2) {
             return -Integer.MAX_VALUE;
+        } else if (gameResult == 2) {
+            return Integer.MAX_VALUE;
         }
         return 0;
     }

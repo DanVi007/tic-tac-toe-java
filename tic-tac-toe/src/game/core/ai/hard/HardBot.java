@@ -21,10 +21,16 @@ public class HardBot {
     }
 
 
+    /**
+     *
+     * @param board
+     * @param playerNumber 1 for p1 and 2 for p2, 1 = 1, 2 = -1
+     */
     public void botMove(Board board, int playerNumber){
         this.board = board;
-        //this.playerNumber = 3-2*playerNumber;
-        this.playerNumber = 2*playerNumber -3;
+        // translates 1 to 1 and 2 = -1
+        this.playerNumber = 3-2*playerNumber;
+        //this.playerNumber = 2*playerNumber -3;
         int moveToPlay = getBestMove();
         board.setPositions(moveToPlay,playerNumber);
 
