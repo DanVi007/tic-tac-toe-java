@@ -95,7 +95,7 @@ public class Node{
      * p2 is -1 = - max
      */
     public int miniMax() {
-        //System.out.println(depth);
+
         if(children.isEmpty() && gameResult() == 0){
             return 0;
         }else if(depth == 0 && gameResult() == 0){

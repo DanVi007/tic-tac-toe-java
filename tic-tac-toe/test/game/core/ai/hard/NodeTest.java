@@ -78,7 +78,41 @@ class NodeTest {
 
         assertArrayEquals(expectedPosition2,children.get(1).getGamePosition().getPositions());
 
+    }
 
+
+    @Test
+    void minimaxP1Wins(){
+        char[] position =
+                {'O', 'X', 'O',
+                        'O', 'X', 'O',
+                        'X', 'X', ' '};
+        Board board = new Board(position);
+        Node node = new Node(board, 9,-1);
+        assertEquals(-Integer.MAX_VALUE, node.miniMax());
+    }
+
+    @Test
+    void minimaxP2Wins(){
+        char[] position =
+                {'O', 'X', 'O',
+                        'O', 'X', 'X',
+                        'O', 'O', 'X'};
+        Board board = new Board(position);
+        Node node = new Node(board, 9,1);
+        assertEquals(Integer.MAX_VALUE, node.miniMax());
+    }
+
+    @Test
+    void minimaxP1WinsNextMoves(){
+        char[] position =
+                {
+                        'O', 'X', ' ',
+                        'X', 'X', ' ',
+                        'O', ' ', ' '};
+        Board board = new Board(position);
+        Node node = new Node(board, 9,-1);
+        assertEquals(-Integer.MAX_VALUE, node.miniMax());
     }
 
 
