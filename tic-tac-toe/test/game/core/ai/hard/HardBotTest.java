@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class HardBotTest {
 
     @Test
-    void miniMax() {
+    void winGame() {
         char[] positions =
                 {'X', 'X', ' ',
                         'O', 'O', ' ',
@@ -19,15 +19,18 @@ class HardBotTest {
         HardBot bot = new HardBot();
         bot.botMove(board,1);
 
-        System.out.println(board.toString());
+        char[] expectedPositions =
+                {'X', 'X', 'X',
+                        'O', 'O', ' ',
+                        ' ', ' ', ' '};
 
-        //assertEquals(true,bot.botMove(board,1));
 
+        assertArrayEquals(expectedPositions, board.getPositions());
     }
 
 
     @Test
-    void blockMove(){
+    void trickyWin(){
         char[] positions =
                        {'O', 'X', 'O',
                         'O', 'X', 'O',
@@ -35,14 +38,18 @@ class HardBotTest {
         Board board = new Board(positions);
         HardBot bot = new HardBot();
         bot.botMove(board,2);
+        char[] expectedPositions =
+                {'O', 'X', 'O',
+                        'O', 'X', 'O',
+                        'X', ' ', 'O'};
 
-        System.out.println(board.toString());
+        assertArrayEquals(expectedPositions, board.getPositions());
 
 
     }
 
     @Test
-    void notOptimalPlay(){
+    void blockWin(){
         char[] positions =
                         {'X', 'O', 'X',
                         ' ', 'O', ' ',
@@ -50,8 +57,14 @@ class HardBotTest {
         Board board = new Board(positions);
         HardBot bot = new HardBot();
         bot.botMove(board,2);
+        char[] expectedPositions =
+                {'X', 'O', 'X',
+                        ' ', 'O', 'O',
+                        'O', 'X', 'X'};
 
-        System.out.println(board);
+
+        assertArrayEquals(expectedPositions, board.getPositions());
+
 
 
 

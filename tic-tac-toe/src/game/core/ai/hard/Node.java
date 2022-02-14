@@ -134,13 +134,6 @@ public class Node{
 
 
 
-    public static void main(String[] args) {
-        Node node = new Node(new Board(),5,1);
-
-        node.createChildren();
-    }
-
-
     public int gameResult() {
         int gameResult = gamePosition.gameResult();
         if (gameResult == 1) {

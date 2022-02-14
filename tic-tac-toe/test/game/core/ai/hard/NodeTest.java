@@ -11,116 +11,77 @@ class NodeTest {
 
     @Test
     void createChildren(){
-        char[] positions =
+        char[] position =
                 {'X', 'X', ' ',
                         'O', 'O', ' ',
                         ' ', ' ', ' '};
-        Node node = new Node(new Board(positions),3,-1);
-
+        Node node = new Node(new Board(position),3,-1);
+        int[] availablePositions = {2,5,6,7,8};
+        int i = 0;
         ArrayList<Node> children = node.getChildren();
-
-
-        for(Node child : node.getChildren()){
-            System.out.println(child.getGamePosition().toString());
-        }
-
-
         assertEquals(5, children.size());
-
+        for(Node child : children){
+            assertEquals(availablePositions[i],child.getPositionPlayed());
+            assertEquals('O', child.getGamePosition().getPositions()[availablePositions[i]]);
+            i++;
+        }
     }
 
 
     @Test
     void checkChildren(){
-        char[] positions =
-                {'X', 'X', ' ',
-                        'O', ' ', ' ',
+        char[] position =
+                {' ', ' ', ' ',
+                        ' ', ' ', ' ',
                         ' ', ' ', ' '};
-        Board board = new Board(positions);
-        Node node = new Node(board,10,1);
+        Board board = new Board(position);
+        Node node = new Node(board,9,1);
         ArrayList<Node> children = node.getChildren();
 
-        System.out.println(children.get(1).getChildren().get(1).getGamePosition().toString());
+        char[] expectedLastPosition =
+                {'X', 'O', 'X',
+                        'O', 'X', 'O',
+                        'X', 'O', 'X'};
 
-
+        Node lastPosition = children.get(0);
+        for(int i =0 ; i < 8; i++){
+            lastPosition = lastPosition.getChildren().get(0);
+        }
+        assertArrayEquals(expectedLastPosition, lastPosition.getGamePosition().getPositions());
 
     }
+
 
     @Test
     void checkChildren2(){
-        char[] positions =
-                {'X', 'X', ' ',
-                        'O', ' ', ' ',
-                        ' ', ' ', ' '};
-        Board board = new Board(positions);
-
-        Node node = new Node(board,10,1);
-
-
-    }
-
-    @Test
-    void checkChildren3(){
         char[] positions =
                 {'O', 'X', 'O',
                         'O', 'X', 'O',
                         'X', ' ', ' '};
         Board board = new Board(positions);
-        Node node = new Node(board, 10, -1);
+        Node node = new Node(board, 9, -1);
 
-        for(Node child: node.getChildren()){
-            System.out.println(child.getGamePosition().toString());
-        }
+        ArrayList<Node> children = node.getChildren();
 
+        char[] expectedPosition1 =
+                {'O', 'X', 'O',
+                        'O', 'X', 'O',
+                        'X', 'O', ' '};
+        char[] expectedPosition2 =
+                {'O', 'X', 'O',
+                        'O', 'X', 'O',
+                        'X', ' ', 'O'};
 
-    }
+        assertEquals(2,children.size());
 
+        assertArrayEquals(expectedPosition1, children.get(0).getGamePosition().getPositions());
 
-    /**
-     * https://www.techiedelight.com/copy-objects-in-java/
-     * https://www.baeldung.com/java-deep-copy
-     */
-    @Test
-    void random(){
-        char[] positions =
-                {'X', 'X', ' ',
-                        'O', 'O', ' ',
-                        ' ', ' ', ' '};
-        Board board = new Board(positions);
-
-        //System.out.println(board.getPositions());
-
-        //Board somethingElse = new Board(board);
-        Board somethingElse = board;
-
-        somethingElse.setPositions(5,1);
-        System.out.println(board.getPositions());
-        System.out.println(somethingElse.getPositions());
-       /*
-        char[] positions2 =
-                {'X', 'X', ' ',
-                        'O', 'O', ' ',
-                        'Z', ' ', ' '};
-
-
-        Board evenBetter = new Board(positions2);
-
-
-
-        evenBetter.setPositions(8,1);
-*/
-
-        somethingElse.setPositions(2,1);
-
-        System.out.println(board.equals(somethingElse));
-        System.out.println(board.toString());
-        System.out.println(somethingElse.toString());
-        //System.out.println(evenBetter.toString());
-
-
+        assertArrayEquals(expectedPosition2,children.get(1).getGamePosition().getPositions());
 
 
     }
+
+
 
 
 }
