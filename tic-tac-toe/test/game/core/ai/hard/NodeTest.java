@@ -57,6 +57,21 @@ class NodeTest {
         Node node = new Node(board,10,1);
 
 
+    }
+
+    @Test
+    void checkChildren3(){
+        char[] positions =
+                {'O', 'X', 'O',
+                        'O', 'X', 'O',
+                        'X', ' ', ' '};
+        Board board = new Board(positions);
+        Node node = new Node(board, 10, -1);
+
+        for(Node child: node.getChildren()){
+            System.out.println(child.getGamePosition().toString());
+        }
+
 
     }
 
@@ -73,10 +88,14 @@ class NodeTest {
                         ' ', ' ', ' '};
         Board board = new Board(positions);
 
+        //System.out.println(board.getPositions());
+
+        //Board somethingElse = new Board(board);
+        Board somethingElse = board;
+
+        somethingElse.setPositions(5,1);
         System.out.println(board.getPositions());
-
-        Board somethingElse = new Board(board);
-
+        System.out.println(somethingElse.getPositions());
        /*
         char[] positions2 =
                 {'X', 'X', ' ',

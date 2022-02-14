@@ -23,8 +23,8 @@ public class HardBot {
 
     public void botMove(Board board, int playerNumber){
         this.board = board;
-        this.playerNumber = 3-2*playerNumber;
-        //this.playerNumber = 2*playerNumber -3;
+        //this.playerNumber = 3-2*playerNumber;
+        this.playerNumber = 2*playerNumber -3;
         int moveToPlay = getBestMove();
         board.setPositions(moveToPlay,playerNumber);
 

@@ -73,8 +73,8 @@ public class Node{
         for(int position : this.gamePosition.getAvailablePositions()){
             Board newGamePosition = new Board(gamePosition);
 
-            int playerNumberTranslation = (int)(1.5 + 0.5*playerNumber);
-
+            //int playerNumberTranslation = (int)(1.5 + 0.5*playerNumber);
+            int playerNumberTranslation = (int)(1.5 - 0.5*playerNumber);
 
             if(newGamePosition.setPositions(position, playerNumberTranslation)){
             //if(newGamePosition.positionTaken(position)){
